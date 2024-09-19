@@ -1,28 +1,57 @@
 <template>
   <v-card>
-    <v-layout>
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-      >
-        <v-list>
-          <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            subtitle="sandra_a88@gmailcom"
-            title="Sandra Adams"
-          ></v-list-item>
-        </v-list>
+    <v-app>
+      <v-layout>
+        <!-- Affichage conditionnel basé sur l'état de connexion -->
+        <div v-if="authStore.isAuthenticated">
+          <NavigationConnected />
+        </div>
+        <div v-else>
+          <NavigationDisconnect />
+        </div>
+        
+        <v-app-bar class="px-3 custom-font" title="Apprendre en traduisant">
 
-        <v-divider></v-divider>
+          <v-spacer></v-spacer>
 
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+          <v-btn prepend-icon="mdi-abugida-thai" >
+            Apprendre l'alphabet
+          </v-btn>
 
-      <v-main style="height: 250px"></v-main>
-    </v-layout>
+          <v-btn
+            :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+            text="Toggle Theme"
+            slim
+            @click="toggleTheme"
+          ></v-btn>
+        </v-app-bar>
+
+        <v-main>
+          <v-container>
+            <h1>Main Content</h1>
+          </v-container>
+        </v-main>
+      </v-layout>
+    </v-app>
+    
   </v-card>
 </template>
+
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+function toggleTheme () {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
+
+const authStore = useAuthStore()
+</script>
+
+<style>
+.v-toolbar-title:first-child {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'cursive';
+}
+</style>
