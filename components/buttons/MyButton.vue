@@ -1,7 +1,7 @@
 <template>
-  <button class="my-button">
+  <v-btn prepend-icon="$vuetify">
     <slot></slot>
-  </button>
+  </v-btn>
 </template>
 
 <!-- <script>
@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 .my-button {
-  border: 1px solid black inset;
+  border: 5px solid black inset;
   padding:10px;
   border-radius:20px
 }
