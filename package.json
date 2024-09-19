@@ -1,0 +1,27 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "eslint": "^9.10.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "globals": "^15.9.0",
+    "prettier": "3.3.3",
+    "sass": "^1.79.1",
+    "sass-loader": "^16.0.1",
+    "typescript-eslint": "^8.6.0"
+  }
+}
