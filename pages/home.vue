@@ -14,8 +14,8 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn prepend-icon="mdi-abugida-thai" >
-            Apprendre l'alphabet
+          <v-btn prepend-icon="mdi-abugida-thai" @click="alphabetStore.toggleAlphabet">
+            Apprendre l'alphabet 
           </v-btn>
 
           <v-btn
@@ -28,7 +28,12 @@
 
         <v-main>
           <v-container>
-            <h1>Main Content</h1>
+            <div v-if="page == 'apprendreAlphabetThai'">
+              <ApprendreAlphabetThai />
+            </div>
+            <div v-else>
+              <h1>Main Content</h1>
+            </div>
           </v-container>
         </v-main>
       </v-layout>
@@ -39,6 +44,7 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth'
+import { useAlphabetStore } from '@/stores/alphabet';
 import { useTheme } from 'vuetify'
 
 const theme = useTheme()
@@ -48,6 +54,10 @@ function toggleTheme () {
 }
 
 const authStore = useAuthStore()
+const alphabetStore = useAlphabetStore();
+
+const page = 'apprendreAlphabetThai';
+
 </script>
 
 <style>
