@@ -10,11 +10,13 @@
           <NavigationDisconnect />
         </div>
         
-        <v-app-bar class="px-3 custom-font" title="Apprendre en traduisant">
-
+        <v-app-bar class="px-3 custom-font">
+          <v-toolbar-title @click="changePage('')" class="c-pointer">
+            Apprendre en traduisant
+          </v-toolbar-title>
           <v-spacer></v-spacer>
 
-          <v-btn prepend-icon="mdi-abugida-thai" @click="alphabetStore.toggleAlphabet">
+          <v-btn prepend-icon="mdi-abugida-thai" @click="changePage('apprendreAlphabetThai')">
             Apprendre l'alphabet 
           </v-btn>
 
@@ -29,7 +31,7 @@
         <v-main>
           <v-container>
             <div v-if="page == 'apprendreAlphabetThai'">
-              <ApprendreAlphabetThai />
+              <pageAlphabet :test="test"/>
             </div>
             <div v-else>
               <h1>Main Content</h1>
@@ -46,6 +48,8 @@
 import { useAuthStore } from '@/stores/auth'
 import { useAlphabetStore } from '@/stores/alphabet';
 import { useTheme } from 'vuetify'
+import pageAlphabet from '@/pages/sub/ApprendreAlphabetThai'
+import { ref } from 'vue'
 
 const theme = useTheme()
 
@@ -56,12 +60,19 @@ function toggleTheme () {
 const authStore = useAuthStore()
 const alphabetStore = useAlphabetStore();
 
-const page = 'apprendreAlphabetThai';
+const page = ref('a');
+
+const changePage = (name) => {
+  page.value = name;
+}
 
 </script>
 
 <style>
 .v-toolbar-title:first-child {
   font-family: 'Comic Sans MS', 'Comic Sans', 'cursive';
+}
+.c-pointer{
+  cursor:pointer;
 }
 </style>

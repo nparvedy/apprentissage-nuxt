@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useAlphabetStore = defineStore('alphabet', {
   state: () => ({
-    showAlphabet: true,
+    showAlphabet: false,
     step: 'step-1'
   }),
   actions: {
