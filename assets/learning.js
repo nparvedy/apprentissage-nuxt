@@ -20,7 +20,7 @@ export default class Learning{
         this.lastNumber = lastNumber;
         this.learning = this;
     }
-
+    //fait
     resetScore(){
         // Parcourir chaque sous-tableau
         for (let i = 0; i < this.alphabet.length; i++) {
@@ -28,7 +28,7 @@ export default class Learning{
             this.alphabet[i]['score'] = 0;
         }
     }
-
+    //fait
     checkIfLetterExist(letter, array) {
         if (!array.includes(letter)) {
             return false;
@@ -36,7 +36,7 @@ export default class Learning{
             return true;
         }
     }
-
+    //fait
     greatAnswer(){
         $('#result').text('Bonne réponse !')
         $('#result').css('color', 'green');
@@ -79,12 +79,13 @@ export default class Learning{
             }
         }
     }
-
+    //fait
     wrongAnswer(){
         $('#result').text('Mauvaise réponse !')
         $('#result').css('color', 'red');
 
         this.alphabet[this.lastNumber]['score'] = 0;
+        console.log(this.alphabet[this.lastNumber])
         this.score = 0;
 
         if (this.continueToWork == false)
@@ -99,15 +100,16 @@ export default class Learning{
             this.countForValidateMode = this.countForValidateMode - 2;
         }
     }
-
+    //fait
     hideIndice(){
         $('#result-indice').css('display', 'none');
     }
-
+    //fait
     showIndice(){
         $('#result-indice').css('display', 'block');
     }
 
+    //utiliser les fonctionnalité de nuxt pour cette partie
     createEventStart(){
         const self = this;
         $('.card').on('click', function(e){
@@ -143,47 +145,48 @@ export default class Learning{
         }
     }
 
+    //fait
     learnLetterE(){
         this.input = 'letterE';
         this.indice = 'exemple';
         this.result = 'letter';
         this.size = '60px'
     }
-
+    //fait
     learnLetter(){
         this.input = 'letter';
         this.indice = 'exemple';
         this.result = 'letterE';
         this.size = '60px'
     }
-
+    //fait
     learnExemple(){
         this.input = 'exemple';
         this.indice = 'exempleTranslated';
         this.result = 'letter';
         this.size = '60px'
     }
-
+    //fait
     learnWord(){
         this.input = 'word';
         this.indice = '';
         this.result = 'exemple';
         this.size = '20px'
     }
-
+    //fait
     learnPicture(){
         this.input = 'pathPicture';
         this.indice = '';
         this.result = 'letter';
         this.size = '60px'
     }
-
+    //fait
     learnWithPicture(){
         this.input = 'letter';
         this.indice = '';
         this.result = 'pathPicture';
     }
-
+    //fait
     shakeTheArray(){
         let taille = this.alphabet.length;
         let decalage = 3 * Math.floor(Math.random() * Math.floor(taille / 3));
@@ -193,11 +196,11 @@ export default class Learning{
     }
 
     //text-align: center;width:100%;background-image: url(images/chicken.jpg);background-size: cover;height: 150px;width: 150px;
-
+    //fait
     getPathPicture(){
         return this.alphabet[this.lastNumber]['pathPicture']
     }
-
+    //fait
     whatMode(score){
         if (this.continueToWork == false)
         {
@@ -332,7 +335,7 @@ export default class Learning{
 
                     $('.card-consonne').append(`
                         <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="true" pathPicture="${pathPicture}">
-                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card" value="true" pathPicture="${pathPicture}">${result}</p>
+                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card"  value="true" pathPicture="${pathPicture}">${result}</p>
                         </div>
                     `);
                 }else if (this.mode == 5){
@@ -346,7 +349,7 @@ export default class Learning{
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
 
                     $('.card-consonne').append(`
-                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width: 100px;height: 100px;" class="card" value="true" pathPicture="${pathPicture}">
+                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width: 100px;height: 100px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
                         </div>
                     `);
                 }else {
@@ -358,8 +361,8 @@ export default class Learning{
                     })
 
                     $('.card-consonne').append(`
-                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="true" pathPicture="${pathPicture}">
-                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;padding: 12px 20px;" class="card" value="true" pathPicture="${pathPicture}">${result}</p>
+                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
+                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;padding: 12px 20px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">${result}</p>
                         </div>
                     `);
                 }
@@ -392,13 +395,13 @@ export default class Learning{
                     let url = 'url(images/'+ pathPicture + ')';
 
                     $('.card-consonne').append(`
-                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width:100px;height:100px" class="card" value="true" pathPicture="${pathPicture}">
+                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width:100px;height:100px" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
                         </div>
                     `);
                 }else {
                     $('.card-consonne').append(`
-                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="false" pathPicture="${pathPicture}">
-                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card" value="false" pathPicture="${pathPicture}">${letterRandom}</p>
+                        <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">
+                            <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">${letterRandom}</p>
                         </div>
                     `);
                 }

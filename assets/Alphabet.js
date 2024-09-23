@@ -1,4 +1,4 @@
-export default class alphabet{
+export default class Alphabet{
     constructor(letter, letterE, exemple, exempleTranslated, color, pathPicture, word, score, type)
     {
         this.letter = letter;
