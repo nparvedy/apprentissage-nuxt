@@ -20,7 +20,12 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     countGoodAnswer: 0,
     alphabet: [] as Alphabet[],
     lastNumber: 0,
-    cardResult: ["", "", ""]
+    inputValue: "",
+    cardResult: ["", "", ""],
+    cardValue: [false, false, false],
+    cardNamePicture: ["", "", ""],
+    cardPathPicture: ["", "", ""],
+    resultReponse: false
   }),
   actions: {
     setAlphabet(value: Alphabet[]){
@@ -36,17 +41,21 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     },
 
     checkIfLetterExist(letter: string, array: Array<string>) {
-        if (!array.includes(letter)) {
-            return false;
-        } else {
-            return true;
+        if (array.length > 2)
+        {
+            if (!array.includes(letter)) {
+                return false;
+            } else {
+                return true;
+            }
         }
+        
     },
 
     greatAnswer(){
         //ne pas oublier de charger le résultat
-        // $('#result').text('Bonne réponse !')
-        // $('#result').css('color', 'green');
+        
+        this.resultReponse = true;
 
         this.alphabet[this.lastNumber]['score']++;
         this.countGoodAnswer++;
@@ -89,6 +98,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     wrongAnswer(){
         // $('#result').text('Mauvaise réponse !')
         // $('#result').css('color', 'red');
+        this.resultReponse = false;
 
         this.alphabet[this.lastNumber]['score'] = 0;
         console.log(this.alphabet[this.lastNumber])
@@ -221,6 +231,18 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         }
     },
 
+    checkAnswer(res: boolean){
+        console.log(res);
+        if (res == true)
+        {
+            this.greatAnswer();
+            this.start();
+        }else{
+            this.wrongAnswer();
+            this.start();
+        }
+    },
+
     start(){
         // $('.card-consonne').empty();
 
@@ -258,6 +280,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         }
 
         // $('#input-consonne').text(this.alphabet[randomNumber][this.input])
+        let resultInputConsonne: keyof Alphabet = this.input as keyof Alphabet;
+        this.inputValue = this.alphabet[randomNumber][resultInputConsonne];
 
         //on fonction du this.result, alors le résultat change
         // let result = this.alphabet[randomNumber][this.result]
@@ -268,7 +292,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         let position = getRandomInteger(0, 3);
         let arraySelected = [];
 
-        // arraySelected.push(result)
+        arraySelected.push(result)
         for (var i = 0; i < 3; i++)
         {
             if (position == i)
@@ -282,6 +306,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 }
                 
                 this.cardResult[i] = result;
+                this.cardValue[i] = true;
+                this.cardNamePicture[i] = pathPicture;
                 
                 if (this.mode == 3)
                 {
@@ -292,6 +318,11 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     height: '150px',
                     //     width: '150px',
                     // })
+
+                    let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
+                    this.inputValue = url;
+                    this.cardPathPicture[i] = url;
+                    console.log(this.cardPathPicture);
 
                     // $('.card-consonne').append(`
                     //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="true" pathPicture="${pathPicture}">
@@ -306,7 +337,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     width: '100%',
                     // })
 
-                    // let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
+                    let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
+                    this.cardPathPicture[i] = url;
 
                     // $('.card-consonne').append(`
                     //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width: 100px;height: 100px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
@@ -327,7 +359,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     // `);
                 }
 
-                // arraySelected.push(result);
+                arraySelected.push(result);
             }else{
                 let letterRandomId = getRandomInteger(0, this.alphabet.length);
 
@@ -336,19 +368,24 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 let result = this.alphabet[letterRandomId][resultProperty];
 
                 this.cardResult[i] = result;
+                this.cardValue[i] = false;
 
                 // let result = this.alphabet[letterRandomId][this.result];
+                console.log("le result", arraySelected)
+                //Gros problème ici de boucle 
                 
-                while (this.checkIfLetterExist(result, arraySelected))
-                {
-                    letterRandomId = getRandomInteger(0, this.alphabet.length);
-                }
+                // while (this.checkIfLetterExist(result, arraySelected))
+                // {
+                //     letterRandomId = getRandomInteger(0, this.alphabet.length);
+                // }
 
                 let letterRandom = result
 
                 arraySelected.push(letterRandom);
 
                 let pathPicture = this.alphabet[letterRandomId]['pathPicture'];
+                this.cardNamePicture[i] = pathPicture;
+                
                 let color = this.alphabet[letterRandomId]['color'];
                 
                 if (this.removeColor)
@@ -359,6 +396,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 if (this.mode == 5)
                 {
                     let url = 'url(images/'+ pathPicture + ')';
+                    this.cardPathPicture[i] = url;
+                    
                     //maintenant il faut assigner les propriété et le rendu sera automatique
 
                     // $('.card-consonne').append(`
@@ -366,6 +405,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     </div>
                     // `);
                 }else {
+                    let url = 'url(images/'+ pathPicture + ')';
+                    this.cardPathPicture[i] = url;
                     // $('.card-consonne').append(`
                     //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">
                     //         <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">${letterRandom}</p>

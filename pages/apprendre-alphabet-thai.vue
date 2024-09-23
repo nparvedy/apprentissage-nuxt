@@ -8,7 +8,7 @@
             <v-col cols="4" class="mx-auto">
                 <v-col>
                     <div v-if="alphabetStore.step == 'step-1'" class="only-column" >
-                        <AlphabetsConsonneOne :learning="learning"/>
+                        <AlphabetsConsonneOne />
                     </div>
                     <div v-else>
                         {{ alphabetStore.step }}
@@ -20,7 +20,7 @@
             
         </v-row>
     
-        <v-btn @click="learning.start()" class="mt-7 ml-8">Commencer</v-btn>
+        <!--<v-btn @click="learning.start()" class="mt-7 ml-8">Commencer</v-btn>-->
     </v-container>
 </template>
 
@@ -42,7 +42,6 @@
     import { ref } from 'vue';
 
     // Références pour les scripts ajoutés
-    let learning = ref(null)
 
     const alphabetStore = useAlphabetStore()
 

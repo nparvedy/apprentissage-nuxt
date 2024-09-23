@@ -3,36 +3,69 @@
     <h2 >Pour commencer les consonnes</h2>
     <div class="d-flex justify-center">
         <div class="square">
-            <p id="input-consonne"></p>
-            <!--<p style="margin-right:5px;">Indice : </p>-->
-            <p id="result-indice"></p>
+            <div v-if="learningAlphabet.mode == 3">
+                <p id="input-consonne-picture" v-bind:style="{ backgroundImage: learningAlphabet.inputValue }"></p>
+            </div>
+            <div v-else>
+                <p id="input-consonne">{{ learningAlphabet.inputValue }}</p>
+                <!--<p style="margin-right:5px;">Indice : </p>-->
+                <p id="result-indice"></p>
+            </div>
         </div> 
     </div>
     
     <div class="flex-co">
-        <p style="margin-bottom:0;margin-top:20px;text-align:center;">Veuillez choisir une carte : </p>
+        <p class="p-choice-card">Veuillez choisir une carte : </p>
         <div class="card-consonne">
-            <div class="card" value="true" pathPicture="${pathPicture}">
-                <p class="card"  value="true" pathPicture="${pathPicture}">{{ learningAlphabet.cardResult[0] }}</p>
+            <div class="card card-one" 
+                v-bind:value="learningAlphabet.cardValue[0]" 
+                v-bind:pathPicture="learningAlphabet.cardNamePicture[0]"
+                :style="cardOneIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[0]} : {}" 
+                @mouseover="cardOneIsHovered = true" 
+                @mouseleave="cardOneIsHovered = false"
+                @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[0])"
+            >
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[0]">{{ learningAlphabet.cardResult[0] }}</p>
             </div>
 
-            <div class="card" value="true" pathPicture="${pathPicture}">
-                <p class="card"  value="true" pathPicture="${pathPicture}">{{ learningAlphabet.cardResult[1] }}</p>
+            <div class="card card-two" 
+                v-bind:value="learningAlphabet.cardValue[1]"
+                v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" 
+                :style="cardTwoIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[1]} : {}" 
+                @mouseover="cardTwoIsHovered = true" 
+                @mouseleave="cardTwoIsHovered = false"
+                @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[1])"
+            >
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" >{{ learningAlphabet.cardResult[1] }}</p>
             </div>
 
-            <div class="card" value="true" pathPicture="${pathPicture}">
-                <p class="card"  value="true" pathPicture="${pathPicture}">{{ learningAlphabet.cardResult[2] }}</p>
+            <div class="card card-three" 
+                v-bind:value="learningAlphabet.cardValue[2]" 
+                v-bind:pathPicture="learningAlphabet.cardNamePicture[2]" 
+                :style="cardThreeIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[2]} : {}" 
+                @mouseover="cardThreeIsHovered = true" 
+                @mouseleave="cardThreeIsHovered = false"
+                @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[2])"
+            >
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[2]">{{ learningAlphabet.cardResult[2] }}</p>
             </div>
         </div>
     </div>
     <h2 style="font-size:30px;margin-bottom:10px;margin-top:10px;">Résultat : </h2>
-    <p id="result"></p>
+    <div v-if="learningAlphabet.resultReponse === true">
+        <p id="result" style="color:green">
+            Bonne réponse !
+        </p>
+    </div>
+
+    <div v-else style="color:red">
+        Mauvaise réponse !
+    </div>
 </template>
 
 <script setup>
 
     import { ref, onMounted, onUnmounted } from 'vue';
-    import learningClass from './assets/Learning.js'
     import Alphabet  from './assets/Alphabet.js'
     import AlphabetConsonne15  from './assets/json/alphabet-consonne-15.json'
 
@@ -40,7 +73,9 @@
     const jqueryScript = ref(null);
     const customScript = ref(null);
     const learningAlphabet = useLearningAlphabetStore()
-    let learning = ref(null)
+    const cardOneIsHovered = ref(false);
+    const cardTwoIsHovered = ref(false);
+    const cardThreeIsHovered = ref(false);
 
     const consonne = AlphabetConsonne15;
 
@@ -52,8 +87,6 @@
         const AlphabetConsonne = new Alphabet(letter, letterE, exemple, exempleTranslated, color, pathPicture, word, 0, 'consonne');  // Création d'un objet Humain
         tableauConsonne.push(AlphabetConsonne);  // Ajout de l'objet Humain dans le tableau
     }
-
-    console.log(tableauConsonne)
 
     // Fonction pour supprimer les scripts
     const removeScripts = () => {
@@ -74,38 +107,21 @@
         removeScripts();
     });
 
+    console.log(learningAlphabet)
+
     onMounted(() => {
         learningAlphabet.setAlphabet(tableauConsonne);
 
         learningAlphabet.shakeTheArray();
         learningAlphabet.start();
+        console.log("je charge")
 
         //commencer l'application maintenant
-
-        // jqueryScript.value = document.createElement('script');
-        // jqueryScript.value.src = "https://code.jquery.com/jquery-3.7.1.min.js";
-        // jqueryScript.value.integrity = "sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=";
-        // jqueryScript.value.crossOrigin = "anonymous";
-        // jqueryScript.value.async = true;
-        // document.body.appendChild(jqueryScript.value);
 
         // jqueryScript.value.onload = () => {
         //     console.log("jQuery chargé, maintenant je charge learning.js");
 
         //     learning = new learningClass(tableauConsonne);
-
-        //     $('.card').on('click', function(e){
-        //     //this n'est pas l'objet en question car on est dans un évènement
-        //         console.log($(e.target).attr('value'))
-        //         if ($(e.target).attr('value') == "true")
-        //         {
-        //             learning.greatAnswer();
-        //             learning.start();
-        //         }else{
-        //             learning.wrongAnswer();
-        //             learning.start();
-        //         }
-        //     })
                 
         //     $('#learn-letter').on('click', function(){
         //         learning.learnLetter();
@@ -147,6 +163,8 @@
 </script>
 
 <style scoped>
+    #input-consonne-picture{background-size:cover;height:150px;width:150px}
+    .p-choice-card{margin-bottom:0;margin-top:20px;text-align:center;}
     .flex-co{display:flex;flex-direction:column}
     .center{
         display:flex;flex-direction:column;max-width: 600px;margin: auto;align-items: center;justify-content: center;
@@ -196,8 +214,12 @@
     
     /*modifier la partie background-color pour la bonne couleur de la carte, par defaut green */
     .card{
-        color:white;font-size:30px;background-color:"green";margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)
+        color:white;font-size:30px;background-color:green;margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        background-size: cover;
+        height: 150px;
+        width: 150px;
     }
+
     .card>p{
         text-transform:uppercase;font-weight:bold;font-size: 60px;text-transform:uppercase;font-weight:bold;padding: 12px 20px;
     }
