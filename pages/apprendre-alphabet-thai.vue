@@ -87,34 +87,6 @@
         tableauConsonne.push(AlphabetConsonne);  // Ajout de l'objet Humain dans le tableau
     }
 
-    // Fonction pour charger les scripts
-    const loadScripts = () => {
-        console.log("Je charge le script jQuery");
-
-        // Charger jQuery via CDN
-        jqueryScript.value = document.createElement('script');
-        jqueryScript.value.src = "https://code.jquery.com/jquery-3.7.1.min.js";
-        jqueryScript.value.integrity = "sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=";
-        jqueryScript.value.crossOrigin = "anonymous";
-        jqueryScript.value.async = true;
-        document.body.appendChild(jqueryScript.value);
-
-        jqueryScript.value.onload = () => {
-            console.log("jQuery chargé, maintenant je charge learning.js");
-
-            // Charger le script personnalisé (learning.js)
-            customScript.value = document.createElement('script');
-            customScript.value.src = 'learning.js'; // Change le chemin si nécessaire
-            customScript.value.async = true;
-            document.body.appendChild(customScript.value);
-
-            customScript.value.onload = () => {
-                console.log("learning.js chargé");
-                
-            };
-        };
-    };
-
     // Fonction pour supprimer les scripts
     const removeScripts = () => {
     if (jqueryScript.value) {
@@ -142,63 +114,67 @@
         alphabetStore.changeStep('step-' + item.value)
     }
 
-    jqueryScript.value = document.createElement('script');
-    jqueryScript.value.src = "https://code.jquery.com/jquery-3.7.1.min.js";
-    jqueryScript.value.integrity = "sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=";
-    jqueryScript.value.crossOrigin = "anonymous";
-    jqueryScript.value.async = true;
-    document.body.appendChild(jqueryScript.value);
+    onMounted(() => {
+        jqueryScript.value = document.createElement('script');
+        jqueryScript.value.src = "https://code.jquery.com/jquery-3.7.1.min.js";
+        jqueryScript.value.integrity = "sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=";
+        jqueryScript.value.crossOrigin = "anonymous";
+        jqueryScript.value.async = true;
+        document.body.appendChild(jqueryScript.value);
 
-    jqueryScript.value.onload = () => {
-        console.log("jQuery chargé, maintenant je charge learning.js");
+        jqueryScript.value.onload = () => {
+            console.log("jQuery chargé, maintenant je charge learning.js");
 
-        learning = new learningClass(tableauConsonne);
+            learning = new learningClass(tableauConsonne);
 
-        $('.card').on('click', function(e){
-        //this n'est pas l'objet en question car on est dans un évènement
-            console.log($(e.target).attr('value'))
-            if ($(e.target).attr('value') == "true")
-            {
-                learning.greatAnswer();
-                learning.start();
-            }else{
-                learning.wrongAnswer();
-                learning.start();
-            }
-        })
+            $('.card').on('click', function(e){
+            //this n'est pas l'objet en question car on est dans un évènement
+                console.log($(e.target).attr('value'))
+                if ($(e.target).attr('value') == "true")
+                {
+                    learning.greatAnswer();
+                    learning.start();
+                }else{
+                    learning.wrongAnswer();
+                    learning.start();
+                }
+            })
+                
+            $('#learn-letter').on('click', function(){
+                learning.learnLetter();
+
+                $('#input-consonne').css({
+                    fontSize: '100px'
+                })
+
+                learning.start()
+            })
+
+            $('#learn-letter-e').on('click', function(){
+                learning.learnLetterE();
+
+                $('#input-consonne').css({
+                    fontSize: '100px'
+                })
+
+                learning.start()
+            })
+
+            $('#learn-exemple').on('click', function(){
+                learning.learnExemple();
+
+                $('#input-consonne').css({
+                    fontSize: '60px'
+                })
+
+                learning.start()
+            })
             
-        $('#learn-letter').on('click', function(){
-            learning.learnLetter();
+            learning.shakeTheArray();
+            learning.start();
+        };
+    })
 
-            $('#input-consonne').css({
-                fontSize: '100px'
-            })
-
-            learning.start()
-        })
-
-        $('#learn-letter-e').on('click', function(){
-            learning.learnLetterE();
-
-            $('#input-consonne').css({
-                fontSize: '100px'
-            })
-
-            learning.start()
-        })
-
-        $('#learn-exemple').on('click', function(){
-            learning.learnExemple();
-
-            $('#input-consonne').css({
-                fontSize: '60px'
-            })
-
-            learning.start()
-        })
-        
-        learning.shakeTheArray();
-        learning.start();
-    };
+    
 
 </script>
