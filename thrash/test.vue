@@ -2,32 +2,6 @@
   <v-card>
     <v-app>
       <v-layout>
-        <!-- Affichage conditionnel basé sur l'état de connexion -->
-        <div v-if="authStore.isAuthenticated" :key="'connected'">
-          <NavigationConnected />
-        </div>
-        <div v-else :key="'disconnected'">
-          <NavigationDisconnect />
-        </div>
-        
-        <v-app-bar class="px-3 custom-font">
-          <v-toolbar-title @click="changePage('')" class="c-pointer">
-            Apprendre en traduisant
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-
-          <v-btn prepend-icon="mdi-abugida-thai" @click="changePage('apprendreAlphabetThai')">
-            Apprendre l'alphabet 
-          </v-btn>
-
-          <v-btn
-            :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-            text="Toggle Theme"
-            slim
-            @click="toggleTheme"
-          ></v-btn>
-        </v-app-bar>
-
         <v-main>
           <v-container>
             <div v-if="page == 'apprendreAlphabetThai'">

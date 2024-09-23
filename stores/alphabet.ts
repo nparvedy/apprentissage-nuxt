@@ -9,7 +9,7 @@ export const useAlphabetStore = defineStore('alphabet', {
     toggleAlphabet() {
       this.showAlphabet = true;
     },
-    changeStep(value)
+    changeStep(value :string)
     {
       this.step = value;
     }

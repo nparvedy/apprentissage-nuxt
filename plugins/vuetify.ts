@@ -51,6 +51,7 @@ export default defineNuxtPlugin((app) => {
           myCustomLightTheme,
         },
       },
+    ssr: true
   })
   app.vueApp.use(vuetify)
 })
