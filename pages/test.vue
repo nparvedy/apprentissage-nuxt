@@ -3,10 +3,10 @@
     <v-app>
       <v-layout>
         <!-- Affichage conditionnel basé sur l'état de connexion -->
-        <div v-if="authStore.isAuthenticated">
+        <div v-if="authStore.isAuthenticated" :key="'connected'">
           <NavigationConnected />
         </div>
-        <div v-else>
+        <div v-else :key="'disconnected'">
           <NavigationDisconnect />
         </div>
         
@@ -31,7 +31,7 @@
         <v-main>
           <v-container>
             <div v-if="page == 'apprendreAlphabetThai'">
-              <pageAlphabet :test="test"/>
+              <ApprendreAlphabetThai :test="test"/>
             </div>
             <div v-else>
               <h1>Main Content</h1>
@@ -48,8 +48,8 @@
 import { useAuthStore } from '@/stores/auth'
 import { useAlphabetStore } from '@/stores/alphabet';
 import { useTheme } from 'vuetify'
-import pageAlphabet from '@/pages/sub/ApprendreAlphabetThai'
 import { ref } from 'vue'
+import ApprendreAlphabetThai from '@/components/ApprendreAlphabetThai';
 
 const theme = useTheme()
 
@@ -58,6 +58,11 @@ function toggleTheme () {
 }
 
 const authStore = useAuthStore()
+
+onNuxtReady(() => {
+  authStore.checkAuth() // Récupérer l'authentification une fois Nuxt prêt
+})
+
 const alphabetStore = useAlphabetStore();
 
 const page = ref('a');

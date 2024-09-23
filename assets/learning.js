@@ -53,22 +53,6 @@ export default class Learning{
             }
         }
 
-        // if (this.continueToWork == false)
-        // {
-        //     if (this.score == 6)
-        //     {
-        //         this.resetScore()
-        //         this.shakeTheArray()
-        //         this.score = 0;
-        //     }
-        // }else {
-        //     if (this.score == 10)
-        //     {
-        //         this.continueToWork = false;
-        //         this.score = 0;
-        //     }
-        // }
-
         if (this.continueToWork == false)
         {
             this.score++;
@@ -251,19 +235,18 @@ export default class Learning{
                     this.startValidateMode = true;
                     return 5;
                 default:
-                    if (this.mode > 5)
-                    {
-                        this.learnWithPicture()
-                        this.startValidateMode = true;
-                        return 5;
-                    }else {
-                        this.learnLetter()
-                        this.removeColor = false;
-                        return 1; // Par sécurité, au cas où
-                    }
+                if (this.mode > 5)
+                {
+                    this.learnWithPicture()
+                    this.startValidateMode = true;
+                    return 5;
+                }else {
+                    this.learnLetter()
+                    this.removeColor = false;
+                    return 1; // Par sécurité, au cas où
+                }
             }
         }
-        
     }
 
     start(){
@@ -303,13 +286,6 @@ export default class Learning{
 
         this.lastNumber = randomNumber;
 
-        // if (this.alphabet[this.lastNumber]['score'] >= 3)
-        // {
-        //     this.hideIndice();
-        // }else {
-        //     this.showIndice();
-        // }
-
         //check what mode
         this.mode = this.whatMode(this.alphabet[randomNumber]['score']);
 
@@ -324,20 +300,6 @@ export default class Learning{
             $('#result-indice').text(this.alphabet[randomNumber][this.indice] +  ' (' + this.alphabet[randomNumber]['exempleTranslated'] + ')')
         }
 
-        // if (mode == 0)
-        // {
-        //     $('#result-indice').text('');
-        // } else if (this.indice != 'exempleTranslated'){
-        //     //parfois renvoie undefined : this.alphabet[randomNumber][this.indice] 
-        //     $('#result-indice').text(this.alphabet[randomNumber][this.indice] +  ' (' + this.alphabet[randomNumber]['exempleTranslated'] + ')')
-        // }else {
-        //     $('#result-indice').text(this.alphabet[randomNumber][this.indice])
-        // }
-        console.log("l'input et le mode")
-        console.log(this.input)
-        console.log(this.mode)
-
-        console.log(this.alphabet[randomNumber][this.input]);
         $('#input-consonne').text(this.alphabet[randomNumber][this.input])
         let result = this.alphabet[randomNumber][this.result]
 

@@ -31,7 +31,7 @@
         <v-main>
           <v-container>
             <div v-if="page == 'apprendreAlphabetThai'">
-              <pageAlphabet :test="test"/>
+              <ApprendreAlphabetThai :test="test"/>
             </div>
             <div v-else>
               <h1>Main Content</h1>
@@ -48,8 +48,8 @@
 import { useAuthStore } from '@/stores/auth'
 import { useAlphabetStore } from '@/stores/alphabet';
 import { useTheme } from 'vuetify'
-import pageAlphabet from '@/pages/sub/ApprendreAlphabetThai'
 import { ref } from 'vue'
+import ApprendreAlphabetThai from '@/components/ApprendreAlphabetThai';
 
 const theme = useTheme()
 

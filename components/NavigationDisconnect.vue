@@ -19,4 +19,8 @@
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
+
+onNuxtReady(() => {
+  authStore.checkAuth() // Récupérer l'authentification une fois Nuxt prêt
+})
 </script>

@@ -40,6 +40,7 @@
 
     import { ref, onMounted, onUnmounted } from 'vue';
     import learningClass  from './assets/Learning.js'
+    import Alphabet  from './assets/Alphabet.js'
 
     import { defineProps } from 'vue';
 
@@ -73,20 +74,7 @@
         ['ศ', 'S', 'Soe Sala', 'Pavillon', '#7E480F', 'pavillon.jpg', 'ศ ศาลา'],
     ];
 
-    class Alphabet{
-        constructor(letter, letterE, exemple, exempleTranslated, color, pathPicture, word, score, type)
-        {
-            this.letter = letter;
-            this.letterE = letterE;
-            this.exemple = exemple;
-            this.exempleTranslated = exempleTranslated;
-            this.color = color;
-            this.pathPicture = pathPicture;
-            this.word = word;
-            this.score = score;
-            this.type = type;
-        }
-    }
+    // alphabet = new Alphabet(tableauConsonne);
 
     const tableauConsonne = [];
 
