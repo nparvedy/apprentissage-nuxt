@@ -25,7 +25,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     cardValue: [false, false, false],
     cardNamePicture: ["", "", ""],
     cardPathPicture: ["", "", ""],
-    resultReponse: false
+    resultReponse: false,
+    startApplication: false
   }),
   actions: {
     setAlphabet(value: Alphabet[]){
@@ -41,15 +42,11 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     },
 
     checkIfLetterExist(letter: string, array: Array<string>) {
-        if (array.length > 2)
-        {
-            if (!array.includes(letter)) {
-                return false;
-            } else {
-                return true;
-            }
+        if (!array.includes(letter)) {
+            return false;
+        } else {
+            return true;
         }
-        
     },
 
     greatAnswer(){
@@ -93,6 +90,12 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 }
             }
         }
+
+        //démarrage de la partie
+        if (this.startApplication == false)
+        {
+            this.startApplication = true;
+        }
     },
 
     wrongAnswer(){
@@ -101,7 +104,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.resultReponse = false;
 
         this.alphabet[this.lastNumber]['score'] = 0;
-        console.log(this.alphabet[this.lastNumber])
         this.score = 0;
 
         if (this.continueToWork == false)
@@ -114,6 +116,12 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         if (this.countForValidateMode > 1)
         {
             this.countForValidateMode = this.countForValidateMode - 2;
+        }
+
+        //démarrage de la partie
+        if (this.startApplication == false)
+        {
+            this.startApplication = true;
         }
     },
 
@@ -371,13 +379,18 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 this.cardValue[i] = false;
 
                 // let result = this.alphabet[letterRandomId][this.result];
-                console.log("le result", arraySelected)
-                //Gros problème ici de boucle 
-                
-                // while (this.checkIfLetterExist(result, arraySelected))
-                // {
-                //     letterRandomId = getRandomInteger(0, this.alphabet.length);
-                // }
+                let z = 0;
+                while (this.checkIfLetterExist(this.alphabet[letterRandomId][resultProperty], arraySelected))
+                {
+                    z++;
+                    letterRandomId = getRandomInteger(0, this.alphabet.length);
+                    //juste par sécurité pour éviter les boucles infini en cas d'erreur de syntaxe
+                    if (z > 10)
+                    {
+                        console.log("Je répète Z", z, result, arraySelected);
+                        return;
+                    }
+                }
 
                 let letterRandom = result
 

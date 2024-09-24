@@ -1,12 +1,12 @@
 <template>
     <v-container>
-        <v-row class="mt-8">
+        <v-row class="mt-4">
             <v-card  max-width="300" cols="2" >
                 <!--<v-list :items="items" @click="alphabetStore.changeStep('step-' + item.value)"></v-list>-->
                 <AlphabetsList />
             </v-card>
-            <v-col cols="4" class="mx-auto">
-                <v-col>
+            <v-col class="mx-auto pt-0">
+                <v-col class="pt-0">
                     <div v-if="alphabetStore.step == 'step-1'" class="only-column" >
                         <AlphabetsConsonneOne />
                     </div>

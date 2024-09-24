@@ -1,23 +1,27 @@
 <template>
-    <h1>Apprendre l'alphabet Thai</h1>
-    <h2 >Pour commencer les consonnes</h2>
-    <div class="d-flex justify-center">
-        <div class="square">
-            <div v-if="learningAlphabet.mode == 3">
-                <p id="input-consonne-picture" v-bind:style="{ backgroundImage: learningAlphabet.inputValue }"></p>
-            </div>
-            <div v-else>
-                <p id="input-consonne">{{ learningAlphabet.inputValue }}</p>
-                <!--<p style="margin-right:5px;">Indice : </p>-->
-                <p id="result-indice"></p>
-            </div>
-        </div> 
-    </div>
+    <v-container class="pt-0">
+        <v-col class="pt-0">
+            <h1>Apprendre l'alphabet Thai</h1>
+            <h2 >Pour commencer les consonnes</h2>
+            <v-card class="d-flex justify-center mx-auto mt-5" max-width="250" min-height="250">
+                <div class="square">
+                    <div v-if="learningAlphabet.mode == 3">
+                        <p id="input-consonne-picture" v-bind:style="{ backgroundImage: learningAlphabet.inputValue }"></p>
+                    </div>
+                    <div v-else>
+                        <p id="input-consonne">{{ learningAlphabet.inputValue }}</p>
+                        <!--<p style="margin-right:5px;">Indice : </p>-->
+                        <p id="result-indice"></p>
+                    </div>
+                </div> 
+            </v-card>
+        </v-col>
+    </v-container>
     
-    <div class="flex-co">
+    <v-container>
         <p class="p-choice-card">Veuillez choisir une carte : </p>
-        <div class="card-consonne">
-            <div class="card card-one" 
+        <v-row class="card-consonne">
+            <v-card class="card card-one" 
                 v-bind:value="learningAlphabet.cardValue[0]" 
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[0]"
                 :style="cardOneIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[0]} : {}" 
@@ -26,9 +30,9 @@
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[0])"
             >
                 <p v-bind:pathPicture="learningAlphabet.cardNamePicture[0]">{{ learningAlphabet.cardResult[0] }}</p>
-            </div>
+            </v-card>
 
-            <div class="card card-two" 
+            <v-card class="card card-two" 
                 v-bind:value="learningAlphabet.cardValue[1]"
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" 
                 :style="cardTwoIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[1]} : {}" 
@@ -37,9 +41,9 @@
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[1])"
             >
                 <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" >{{ learningAlphabet.cardResult[1] }}</p>
-            </div>
+            </v-card>
 
-            <div class="card card-three" 
+            <v-card class="card card-three" 
                 v-bind:value="learningAlphabet.cardValue[2]" 
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[2]" 
                 :style="cardThreeIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[2]} : {}" 
@@ -48,18 +52,21 @@
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[2])"
             >
                 <p v-bind:pathPicture="learningAlphabet.cardNamePicture[2]">{{ learningAlphabet.cardResult[2] }}</p>
-            </div>
+            </v-card>
+        </v-row>
+    </v-container>
+    
+    <div v-if="learningAlphabet.startApplication === true">
+        <h2 style="font-size:30px;margin-bottom:10px;margin-top:10px;">Résultat : </h2>
+        <div v-if="learningAlphabet.resultReponse === true">
+            <p id="result" style="color:green">
+                Bonne réponse !
+            </p>
         </div>
-    </div>
-    <h2 style="font-size:30px;margin-bottom:10px;margin-top:10px;">Résultat : </h2>
-    <div v-if="learningAlphabet.resultReponse === true">
-        <p id="result" style="color:green">
-            Bonne réponse !
-        </p>
-    </div>
 
-    <div v-else style="color:red">
-        Mauvaise réponse !
+        <div v-else style="color:red">
+            Mauvaise réponse !
+        </div>
     </div>
 </template>
 
@@ -209,7 +216,7 @@
     }
 
     .square{
-        display:flex;align-items:center;justify-content:center;border: 1px solid #d0d0d0;margin-top: 20px;padding: 20px;background-color: #fdfdfd;box-shadow: inset rgb(133 133 133 / 14%) 0px 0px 7px 0px;flex-direction: column;width:100%;
+        display:flex;align-items:center;justify-content:center;border: 1px solid #d0d0d0;padding: 20px;background-color: #fdfdfd;box-shadow: inset rgb(133 133 133 / 14%) 0px 0px 7px 0px;flex-direction: column;width:100%;
     }
     
     /*modifier la partie background-color pour la bonne couleur de la carte, par defaut green */
