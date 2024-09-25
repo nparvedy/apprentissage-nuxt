@@ -1,17 +1,16 @@
 <template>
     <v-container class="pt-0">
         <v-col class="pt-0">
-            <h1>Apprendre l'alphabet Thai</h1>
-            <h2 >Pour commencer les consonnes</h2>
+            <h1>Apprendre l'alphabet Thai - les consonnes</h1>
             <v-card class="d-flex justify-center mx-auto mt-5" max-width="250" min-height="250">
                 <div class="square">
-                    <div v-if="learningAlphabet.mode == 3">
+                    <div v-if="learningAlphabet.mode == 3" >
                         <p id="input-consonne-picture" v-bind:style="{ backgroundImage: learningAlphabet.inputValue }"></p>
                     </div>
                     <div v-else>
                         <p id="input-consonne">{{ learningAlphabet.inputValue }}</p>
                         <!--<p style="margin-right:5px;">Indice : </p>-->
-                        <p id="result-indice"></p>
+                        <p id="result-indice">{{ learningAlphabet.indiceResult }}</p>
                     </div>
                 </div> 
             </v-card>
@@ -170,7 +169,7 @@
 </script>
 
 <style scoped>
-    #input-consonne-picture{background-size:cover;height:150px;width:150px}
+    #input-consonne-picture{background-size:cover;height:200px;width:200px}
     .p-choice-card{margin-bottom:0;margin-top:20px;text-align:center;}
     .flex-co{display:flex;flex-direction:column}
     .center{

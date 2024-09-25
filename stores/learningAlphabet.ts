@@ -26,7 +26,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     cardNamePicture: ["", "", ""],
     cardPathPicture: ["", "", ""],
     resultReponse: false,
-    startApplication: false
+    startApplication: false,
+    indiceResult: ""
   }),
   actions: {
     setAlphabet(value: Alphabet[]){
@@ -197,8 +198,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
             let divid = this.difficulty * 6;
             this.mode = (score % 18) / this.difficulty;
 
-            console.log(this.difficulty, divid, this.mode)
-
             switch (Math.floor(this.mode)) {
                 case 0:
                     this.learnLetter()
@@ -240,7 +239,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     },
 
     checkAnswer(res: boolean){
-        console.log(res);
         if (res == true)
         {
             this.greatAnswer();
@@ -276,15 +274,18 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         //check what mode
         this.mode = this.whatMode(this.alphabet[randomNumber]['score']);
 
+        //On transforme notre string en une variable, donc on fonction du résultat de this.indice, il sera considéré comme une clé
+        let resultIndiceKey: keyof Alphabet = this.indice as keyof Alphabet;
+
         if (this.mode == 3 || this.mode == 5)
         {
-            // $('#result-indice').text('');
+            this.indiceResult = "";
         }else if (this.mode == 2){
-            // $('#result-indice').text(this.alphabet[randomNumber][this.indice])
+            this.indiceResult = this.alphabet[randomNumber][resultIndiceKey];
         }else if (this.mode == 4){
-            // $('#result-indice').text('')
+            this.indiceResult = "";
         }else {
-            // $('#result-indice').text(this.alphabet[randomNumber][this.indice] +  ' (' + this.alphabet[randomNumber]['exempleTranslated'] + ')')
+            this.indiceResult = this.alphabet[randomNumber][resultIndiceKey] +  ' (' + this.alphabet[randomNumber]['exempleTranslated'] + ')';
         }
 
         // $('#input-consonne').text(this.alphabet[randomNumber][this.input])
@@ -316,6 +317,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 this.cardResult[i] = result;
                 this.cardValue[i] = true;
                 this.cardNamePicture[i] = pathPicture;
+
+                console.log(this.cardResult[i], this.cardValue[i], this.cardNamePicture[i])
                 
                 if (this.mode == 3)
                 {
@@ -330,7 +333,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
                     this.inputValue = url;
                     this.cardPathPicture[i] = url;
-                    console.log(this.cardPathPicture);
 
                     // $('.card-consonne').append(`
                     //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="true" pathPicture="${pathPicture}">
@@ -359,6 +361,9 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     height: '',
                     //     width: '100%',
                     // })
+                    //pas sur de cette ligne
+                    let url = 'url(images/'+ pathPicture + ')';
+                    this.cardPathPicture[i] = url;
 
                     // $('.card-consonne').append(`
                     //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
@@ -426,7 +431,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     </div>
                     // `);
                 }
-                
             }
         }
     }
