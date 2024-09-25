@@ -22,12 +22,13 @@
     </v-container>
     
     <v-container>
-        <p class="p-choice-card">Veuillez choisir une carte : </p>
-        <v-row class="card-consonne">
+        <v-row class="mb-2"><v-chip prepend-icon="mdi-arrow-down-left" append-icon="mdi-arrow-down-right" variant="elevated" color="#3e3e3e" size="x-large" class="mx-auto">Veuillez choisir une carte : </v-chip></v-row>
+        
+        <v-row class="card-consonne mx-auto justify-center w-100">
             <v-card class="card card-one" 
                 v-bind:value="learningAlphabet.cardValue[0]" 
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[0]"
-                :style="cardOneIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[0]} : {}" 
+                :style="learningAlphabet.showAnyway || cardOneIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[0]} : {}" 
                 @mouseover="cardOneIsHovered = true" 
                 @mouseleave="cardOneIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[0])"
@@ -38,18 +39,18 @@
             <v-card class="card card-two" 
                 v-bind:value="learningAlphabet.cardValue[1]"
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" 
-                :style="cardTwoIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[1]} : {}" 
+                :style="learningAlphabet.showAnyway || cardTwoIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[1]} : {}" 
                 @mouseover="cardTwoIsHovered = true" 
                 @mouseleave="cardTwoIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[1])"
             >
-                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" v-bind:style="{ fontSize: learningAlphabet.sizePCard }">{{ learningAlphabet.cardResult[1] }}</p>
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" v-bind:style="{ fontSize: learningAlphabet.sizePCard } ">{{ learningAlphabet.cardResult[1] }}</p>
             </v-card>
 
             <v-card class="card card-three" 
                 v-bind:value="learningAlphabet.cardValue[2]" 
                 v-bind:pathPicture="learningAlphabet.cardNamePicture[2]" 
-                :style="cardThreeIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[2]} : {}" 
+                :style="learningAlphabet.showAnyway || cardThreeIsHovered ? { backgroundImage: learningAlphabet.cardPathPicture[2]} : {}" 
                 @mouseover="cardThreeIsHovered = true" 
                 @mouseleave="cardThreeIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[2])"
@@ -62,12 +63,14 @@
     <div v-if="learningAlphabet.startApplication === true">
         <h2 style="font-size:30px;margin-bottom:10px;margin-top:10px;">Résultat : </h2>
         <div v-if="learningAlphabet.resultReponse === true">
-            <p id="result" style="color:green">
+            <p id="result" class="info-success" style="color:green">
+                <v-icon class="icon-check">mdi-check-bold</v-icon>
                 Bonne réponse !
             </p>
         </div>
 
-        <div v-else style="color:red">
+        <div v-else style="color:red" class="info-error">
+            <v-icon class="icon-error">mdi-alert-circle</v-icon>
             Mauvaise réponse !
         </div>
     </div>
@@ -112,6 +115,7 @@
 </script>
 
 <style scoped>
+    .size-p{font-size:25px}
     #input-consonne-picture{background-size:cover;height:200px;width:200px}
     .p-choice-card{margin-bottom:0;margin-top:20px;text-align:center;}
     .flex-co{display:flex;flex-direction:column}
@@ -121,7 +125,6 @@
 
     #input-consonne{
         border:none;
-        background-color:#fdfdfd;
         text-align: center;
         width:100%
     }
@@ -157,7 +160,7 @@
     }
 
     .square{
-        display:flex;align-items:center;justify-content:center;border: 1px solid #d0d0d0;padding: 20px;background-color: #fdfdfd;box-shadow: inset rgb(133 133 133 / 14%) 0px 0px 7px 0px;flex-direction: column;width:100%;
+        display:flex;align-items:center;justify-content:center;border: 1px solid #d0d0d0;padding: 20px;box-shadow: inset rgb(133 133 133 / 14%) 0px 0px 7px 0px;flex-direction: column;width:100%;
     }
     
     /*modifier la partie background-color pour la bonne couleur de la carte, par defaut green */
@@ -170,5 +173,41 @@
 
     .card>p{
         text-transform:uppercase;font-weight:bold;text-transform:uppercase;font-weight:bold;padding: 12px 20px;text-align: center;
+    }
+
+    .info-success {
+        background-color: #e0ffe6;
+        border: 1px solid #00b894;
+        color: #2d3436;
+        padding: 15px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+
+    .icon-check {
+        color: #00b894;
+        margin-right: 10px;
+        font-size: 1.5em;
+    }
+
+    .info-error {
+        background-color: #ffe0e0;
+        border: 1px solid #d63031;
+        color: #2d3436;
+        padding: 15px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 1.1em;
+        font-weight: 500;
+        }
+
+    .icon-error {
+        color: #d63031;
+        margin-right: 10px;
+        font-size: 1.5em;
     }
 </style>

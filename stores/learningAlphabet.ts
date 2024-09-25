@@ -31,7 +31,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     resultReponse: false,
     startApplication: false,
     indiceResult: "",
-    showHoverPicture: false
+    showHoverPicture: false,
+    showAnyway: false
   }),
   actions: {
     // Action pour sauvegarder l'état dans le local storage
@@ -142,6 +143,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 this.resetScore()
                 this.shakeTheArray()
                 this.score = 0;
+                this.difficulty = 0;
             }
         }else {
             if (this.startValidateMode && this.mode == 5)
@@ -205,6 +207,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.sizeInput = '80px';
         this.sizePCard = '60px';
         this.showHoverPicture = true;
+        this.showAnyway = false;
     },
 
     learnLetter(){
@@ -215,6 +218,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.sizePCard = '60px';
         this.sizeInput = '80px';
         this.showHoverPicture = true;
+        this.showAnyway = false;
     },
 
     learnExemple(){
@@ -224,6 +228,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.size = '60px';
         this.sizePCard = '80px';
         this.showHoverPicture = true;
+        this.showAnyway = false;
     },
 
     learnWord(){
@@ -233,6 +238,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.size = '20px'
         this.sizePCard = '30px';
         this.showHoverPicture = true;
+        this.showAnyway = false;
     },
 
     learnPicture(){
@@ -241,6 +247,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.result = 'letter';
         this.size = '60px'
         this.showHoverPicture = false;
+        this.showAnyway = false;
+        this.sizePCard = '80px'
     },
 
     learnWithPicture(){
@@ -248,6 +256,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.indice = '';
         this.result = 'pathPicture';
         this.showHoverPicture = true;
+        this.showAnyway = true;
     },
 
     shakeTheArray(){
@@ -413,7 +422,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     }
 
                 }else if (this.mode == 5){
-                    
+                    this.cardResult = ["", "", ""];
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
                     this.cardPathPicture[i] = url;
                     if (this.showHoverPicture)
@@ -477,6 +486,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 {
                     let url = 'url(images/'+ pathPicture + ')';
                     this.cardPathPicture[i] = url;
+                    this.cardResult = ["", "", ""];
                     if (this.showHoverPicture)
                     {
                         this.cardPathPicture[i] = url;
