@@ -1,30 +1,26 @@
 <template>
-  <transition name="fade" mode="out-in">
+  <v-container>
+    <h1>Nos applications pour apprendre des langues</h1>
     
-    <v-container>
-      <h1>Nos applications pour apprendre des langues</h1>
-      
-      <v-sheet color="info" rounded :elevation="5" class="mx-auto mt-3">
-        
-        <p class="pa-5"><v-icon class="mx-1" size="45px" color="yellow" >mdi-pac-man</v-icon>Bienvenue sur <strong>apprendre en traduisant</strong>, la plateforme dédiée à l'apprentissage des langues, avec un focus particulier sur des langues uniques comme le thaïlandais.<br><br> Nous développons des applications intuitives et interactives pour vous aider à maîtriser de nouvelles langues à votre rythme. Grâce à des outils immersifs, des exercices pratiques et un apprentissage progressif, nos solutions sont conçues pour rendre l'apprentissage ludique et efficace, que vous soyez débutant ou avancé. Découvrez une nouvelle façon d'apprendre et de vous immerger dans la culture linguistique !</p>
-      </v-sheet>
+    <v-sheet color="info" rounded :elevation="5" class="mx-auto mt-3">
+      <p class="pa-5"><v-icon class="mx-1" size="45px" color="yellow" >mdi-pac-man</v-icon>Bienvenue sur <strong>apprendre en traduisant</strong>, la plateforme dédiée à l'apprentissage des langues, avec un focus particulier sur des langues uniques comme le thaïlandais.<br><br> Nous développons des applications intuitives et interactives pour vous aider à maîtriser de nouvelles langues à votre rythme. Grâce à des outils immersifs, des exercices pratiques et un apprentissage progressif, nos solutions sont conçues pour rendre l'apprentissage ludique et efficace, que vous soyez débutant ou avancé. Découvrez une nouvelle façon d'apprendre et de vous immerger dans la culture linguistique !</p>
+    </v-sheet>
 
-      <v-expansion-panels class="mt-10" v-model="activePanel" eager>
-        <v-expansion-panel>
-          <v-expansion-panel-title>
-            <h2>Apprendre le thaïlandais</h2>
-          </v-expansion-panel-title>
-          <v-expansion-panel-text>
-            <v-row class="justify-center">
-              <card-application-alphabet />
-            </v-row>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-      </v-expansion-panels>
-      
-    </v-container>
+    <v-expansion-panels class="mt-10" v-model="activePanel" eager>
+      <v-expansion-panel>
+        <v-expansion-panel-title>
+          <h2>Apprendre le thaïlandais</h2>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-row class="justify-center">
+            <card-application-alphabet />
+          </v-row>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    
+  </v-container>
   
-  </transition>
 </template>
 
 <script setup>

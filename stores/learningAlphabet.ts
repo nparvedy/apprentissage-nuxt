@@ -9,7 +9,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     result: 'letterE',
     AlphabetActived: 3,
     score: 0,
-    continueToWork: false,
+    continueToWork: true,
     mode: 0,
     startValidateMode: false,
     countForValidateMode: 0,
@@ -18,8 +18,9 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     size: '60px',
     sizeInput: '60px',
     sizePCard: '60px',
-    difficulty: 1,
+    difficulty: 0,
     countGoodAnswer: 0,
+    countBadAnswer: 0,
     alphabet: [] as Alphabet[],
     lastNumber: 0,
     inputValue: "",
@@ -30,8 +31,23 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     resultReponse: false,
     startApplication: false,
     indiceResult: "",
+    showHoverPicture: false
   }),
   actions: {
+    // Action pour sauvegarder l'état dans le local storage
+    saveState() {
+        localStorage.setItem('learning-alphabet', JSON.stringify(this.$state));
+    },
+
+    // Action pour charger l'état depuis le local storage
+    loadState() {
+        const savedState = localStorage.getItem('learning-alphabet');
+        if (savedState) {
+            const state = JSON.parse(savedState);
+            Object.assign(this.$state, state);
+        }
+    },
+
     setAlphabet(value: Alphabet[]){
         this.alphabet = value;
     },
@@ -52,22 +68,70 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         }
     },
 
-    greatAnswer(){
-        //ne pas oublier de charger le résultat
-        
-        this.resultReponse = true;
+    upDifficulty(value: boolean): void
+    {
+        if (value)
+        {   
+            this.difficulty++;
 
-        this.alphabet[this.lastNumber]['score']++;
-        this.countGoodAnswer++;
+            //Si la difficulté dépasse le nombre de mode alors il ne peut pas augmenter
+            if (this.difficulty > 5)
+            {
+                this.difficulty = 5;
+            }
+        }
+        console.log(this.difficulty)
+    },
 
+    reduceDifficulty(value: boolean): void
+    {
+        if (value)
+        {   
+            this.difficulty--;
+
+            //Si la difficulté passe en négative alors on repasse à 0, le niveau le plus bas
+            if (this.difficulty == -1)
+            {
+                this.difficulty = 0;
+            }
+        }
+        console.log(this.difficulty)
+    },
+
+    checkIfEnoughGoodAnswer(): boolean
+    {
         if (this.countGoodAnswer == 6)
         {
             this.countGoodAnswer = 0;
-            if (this.difficulty != 1)
-            {
-                this.difficulty--;
-            }
+            return true;
+        }else {
+            return false;
         }
+    },
+
+    checkIfEnoughBadAnswer(): boolean
+    {
+        //on repasse à 0 le compteur de bonne réponse
+        this.countGoodAnswer = 0;
+
+        if (this.countBadAnswer == 3)
+        {
+            this.countBadAnswer = 0;
+            return true;
+        }else {
+            return false;
+        }
+    },
+
+    greatAnswer()
+    {
+        //ne pas oublier de charger le résultat
+        
+        this.resultReponse = true;
+        this.alphabet[this.lastNumber]['score']++;
+        this.countGoodAnswer++;
+
+        this.upDifficulty(this.checkIfEnoughGoodAnswer());
 
         if (this.continueToWork == false)
         {
@@ -99,23 +163,26 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         {
             this.startApplication = true;
         }
+
+        this.saveState();
     },
 
     wrongAnswer(){
         // $('#result').text('Mauvaise réponse !')
         // $('#result').css('color', 'red');
+        this.countBadAnswer++;
         this.resultReponse = false;
 
         this.alphabet[this.lastNumber]['score'] = 0;
         this.score = 0;
 
+        this.reduceDifficulty(this.checkIfEnoughBadAnswer());
+
         if (this.continueToWork == false)
         {
             this.continueToWork = true;
         }
-
-        this.difficulty = this.difficulty++;
-        this.countGoodAnswer = 0;
+        
         if (this.countForValidateMode > 1)
         {
             this.countForValidateMode = this.countForValidateMode - 2;
@@ -126,6 +193,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         {
             this.startApplication = true;
         }
+
+        this.saveState();
     },
     
     learnLetterE(){
@@ -133,7 +202,9 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.indice = 'exemple';
         this.result = 'letter';
         this.size = '60px';
+        this.sizeInput = '80px';
         this.sizePCard = '60px';
+        this.showHoverPicture = true;
     },
 
     learnLetter(){
@@ -142,6 +213,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.result = 'letterE';
         this.size = '60px';
         this.sizePCard = '60px';
+        this.sizeInput = '80px';
+        this.showHoverPicture = true;
     },
 
     learnExemple(){
@@ -150,6 +223,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.result = 'letter';
         this.size = '60px';
         this.sizePCard = '80px';
+        this.showHoverPicture = true;
     },
 
     learnWord(){
@@ -158,6 +232,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.result = 'exemple';
         this.size = '20px'
         this.sizePCard = '30px';
+        this.showHoverPicture = true;
     },
 
     learnPicture(){
@@ -165,12 +240,14 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.indice = '';
         this.result = 'letter';
         this.size = '60px'
+        this.showHoverPicture = false;
     },
 
     learnWithPicture(){
         this.input = 'letter';
         this.indice = '';
         this.result = 'pathPicture';
+        this.showHoverPicture = true;
     },
 
     shakeTheArray(){
@@ -181,20 +258,23 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.alphabet = this.alphabet.slice(decalage).concat(this.alphabet.slice(0, decalage));
     },
 
-    getPathPicture(){
-        return this.alphabet[this.lastNumber]['pathPicture']
+    getPathPicture(name: string){
+        let path = 'url(images/'+ name + ')';
+        return path;
     },
 
-    whatMode(score: number){
+    whatMode(){
         if (this.continueToWork == false)
         {
             this.learnPicture()
             return 3;
         }else {
             let divid = this.difficulty * 6;
-            this.mode = (score % 18) / this.difficulty;
+            // this.mode = (score % 18) / this.difficulty;
 
-            switch (Math.floor(this.mode)) {
+            console.log("Le mode actuel", this.difficulty)
+
+            switch (Math.floor(this.difficulty)) {
                 case 0:
                     this.learnLetter()
                     this.removeColor = false;
@@ -247,6 +327,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
 
     start(){
         // $('.card-consonne').empty();
+        this.whatMode();
 
         let arrayPronostic = [];
 
@@ -268,7 +349,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.lastNumber = randomNumber;
 
         //check what mode
-        this.mode = this.whatMode(this.alphabet[randomNumber]['score']);
+        this.mode = this.whatMode();
+        console.log("Le mode..", this.mode)
 
         //On transforme notre string en une variable, donc on fonction du résultat de this.indice, il sera considéré comme une clé
         let resultIndiceKey: keyof Alphabet = this.indice as keyof Alphabet;
@@ -320,47 +402,36 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 
                 if (this.mode == 3)
                 {
-                    let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
+                    let url = this.getPathPicture(this.alphabet[randomNumber]['pathPicture']);
+                    
                     this.inputValue = url;
-                    this.cardPathPicture[i] = url;
+                    if (this.showHoverPicture)
+                    {
+                        this.cardPathPicture[i] = url;
+                    }else {
+                        this.cardPathPicture[i] = ""
+                    }
 
-                    // $('.card-consonne').append(`
-                    //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" value="true" pathPicture="${pathPicture}">
-                    //         <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card"  value="true" pathPicture="${pathPicture}">${result}</p>
-                    //     </div>
-                    // `);
                 }else if (this.mode == 5){
-                    // $('#input-consonne').css({
-                    //     backgroundImage: '',
-                    //     backgroundSize: '',
-                    //     height: '',
-                    //     width: '100%',
-                    // })
                     
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
                     this.cardPathPicture[i] = url;
-
-                    // $('.card-consonne').append(`
-                    //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width: 100px;height: 100px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
-                    //     </div>
-                    // `);
+                    if (this.showHoverPicture)
+                    {
+                        this.cardPathPicture[i] = url;
+                    }else {
+                        this.cardPathPicture[i] = ""
+                    }
                 }else {
-                    // $('#input-consonne').css({
-                    //     backgroundImage: '',
-                    //     backgroundSize: '',
-                    //     height: '',
-                    //     width: '100%',
-                    // })
                     //pas sur de cette ligne
                     let url = 'url(images/'+ pathPicture + ')';
                     this.cardPathPicture[i] = url;
-
-                    // $('.card-consonne').append(`
-                    //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
-                    //         <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;padding: 12px 20px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">${result}</p>
-                    //     </div>
-                    // `);
-                
+                    if (this.showHoverPicture)
+                    {
+                        this.cardPathPicture[i] = url;
+                    }else {
+                        this.cardPathPicture[i] = ""
+                    }
                 }
 
                 arraySelected.push(result);
@@ -406,21 +477,21 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 {
                     let url = 'url(images/'+ pathPicture + ')';
                     this.cardPathPicture[i] = url;
-                    
-                    //maintenant il faut assigner les propriété et le rendu sera automatique
-
-                    // $('.card-consonne').append(`
-                    //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);background-image: ${url};background-size:cover;width:100px;height:100px" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">
-                    //     </div>
-                    // `);
+                    if (this.showHoverPicture)
+                    {
+                        this.cardPathPicture[i] = url;
+                    }else {
+                        this.cardPathPicture[i] = ""
+                    }
                 }else {
                     let url = 'url(images/'+ pathPicture + ')';
                     this.cardPathPicture[i] = url;
-                    // $('.card-consonne').append(`
-                    //     <div style="color:white;font-size:30px;background-color:${color};margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">
-                    //         <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;    padding: 12px 20px;" class="card" click="handleCardClick() value="false" pathPicture="${pathPicture}">${letterRandom}</p>
-                    //     </div>
-                    // `);
+                    if (this.showHoverPicture)
+                    {
+                        this.cardPathPicture[i] = url;
+                    }else {
+                        this.cardPathPicture[i] = ""
+                    }
                 }
             }
         }

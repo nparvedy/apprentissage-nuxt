@@ -38,9 +38,6 @@
 </style>
 
 <script setup>
-    import { ref } from 'vue';
-
-    // Références pour les scripts ajoutés
 
     const alphabetStore = useAlphabetStore()
 
@@ -48,5 +45,12 @@
         console.log('La valeur de item.value est :', item.value)
         alphabetStore.changeStep('step-' + item.value)
     }
+
+    useHead({
+        title: "Apprendre l'alphabet Thaïlandais",
+        meta: [
+        { name: 'Apprendre en traduisant', content: " Apprenez l'alphabet thaï en jouant ! Choisissez la bonne carte dans une série de tests progressifs, conçus pour vous faire mémoriser facilement les caractères et leur prononciation. " }
+        ]
+    })
 
 </script>

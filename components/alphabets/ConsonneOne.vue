@@ -80,8 +80,6 @@
     import AlphabetConsonne15  from './assets/json/alphabet-consonne-15.json'
 
     // Références pour les scripts ajoutés
-    const jqueryScript = ref(null);
-    const customScript = ref(null);
     const learningAlphabet = useLearningAlphabetStore()
     const cardOneIsHovered = ref(false);
     const cardTwoIsHovered = ref(false);
@@ -108,6 +106,7 @@
         learningAlphabet.setAlphabet(tableauConsonne);
 
         learningAlphabet.shakeTheArray();
+        learningAlphabet.loadState();
         learningAlphabet.start();
     })
 </script>

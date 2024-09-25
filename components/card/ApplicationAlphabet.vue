@@ -1,10 +1,11 @@
 <template>
-    <div class="v-col-lg-3 v-col-12">
+    <div class="v-col-lg-3 v-col-12"> 
       <v-hover v-slot="{ isHovering, props }">
         <v-card
           class="mx-auto"
           max-width="344"
           v-bind="props"
+          to="apprendre-alphabet-thai"
         >
           <v-img src="/images/application-apprendre-alphabet-thai.png"></v-img>
   
