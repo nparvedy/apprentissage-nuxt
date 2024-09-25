@@ -24,6 +24,22 @@ export default defineNuxtConfig({
     },
   },
 
+  app: {
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      meta: [
+        {
+          
+        }
+      ],
+      htmlAttrs: {
+        lang: 'fr'
+      }
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
   compatibilityDate: '2024-09-19',
   devtools: { enabled: true },
   

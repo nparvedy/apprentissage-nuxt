@@ -4,11 +4,15 @@
             <h1>Apprendre l'alphabet Thai - les consonnes</h1>
             <v-card class="d-flex justify-center mx-auto mt-5" max-width="250" min-height="250">
                 <div class="square">
-                    <div v-if="learningAlphabet.mode == 3" >
-                        <p id="input-consonne-picture" v-bind:style="{ backgroundImage: learningAlphabet.inputValue }"></p>
+                    <div v-if="learningAlphabet.mode == 3">
+                        <p id="input-consonne-picture" :style="
+                            { 
+                                backgroundImage: learningAlphabet.inputValue,
+                            }
+                            "></p>
                     </div>
                     <div v-else>
-                        <p id="input-consonne">{{ learningAlphabet.inputValue }}</p>
+                        <p id="input-consonne" v-bind:style="{ fontSize: learningAlphabet.sizeInput }">{{ learningAlphabet.inputValue }}</p>
                         <!--<p style="margin-right:5px;">Indice : </p>-->
                         <p id="result-indice">{{ learningAlphabet.indiceResult }}</p>
                     </div>
@@ -28,7 +32,7 @@
                 @mouseleave="cardOneIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[0])"
             >
-                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[0]">{{ learningAlphabet.cardResult[0] }}</p>
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[0]" v-bind:style="{ fontSize: learningAlphabet.sizePCard }">{{ learningAlphabet.cardResult[0] }}</p>
             </v-card>
 
             <v-card class="card card-two" 
@@ -39,7 +43,7 @@
                 @mouseleave="cardTwoIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[1])"
             >
-                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" >{{ learningAlphabet.cardResult[1] }}</p>
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[1]" v-bind:style="{ fontSize: learningAlphabet.sizePCard }">{{ learningAlphabet.cardResult[1] }}</p>
             </v-card>
 
             <v-card class="card card-three" 
@@ -50,7 +54,7 @@
                 @mouseleave="cardThreeIsHovered = false"
                 @click="learningAlphabet.checkAnswer(learningAlphabet.cardValue[2])"
             >
-                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[2]">{{ learningAlphabet.cardResult[2] }}</p>
+                <p v-bind:pathPicture="learningAlphabet.cardNamePicture[2]" v-bind:style="{ fontSize: learningAlphabet.sizePCard }">{{ learningAlphabet.cardResult[2] }}</p>
             </v-card>
         </v-row>
     </v-container>
@@ -94,23 +98,8 @@
         tableauConsonne.push(AlphabetConsonne);  // Ajout de l'objet Humain dans le tableau
     }
 
-    // Fonction pour supprimer les scripts
-    const removeScripts = () => {
-    if (jqueryScript.value) {
-        document.body.removeChild(jqueryScript.value);
-        jqueryScript.value = null;
-        console.log("jQuery supprimé");
-    }
-    if (customScript.value) {
-        document.body.removeChild(customScript.value);
-        customScript.value = null;
-        console.log("learning.js supprimé");
-        }
-    };
-
     // Nettoyage lorsque le composant est détruit
     onUnmounted(() => {
-        removeScripts();
     });
 
     console.log(learningAlphabet)
@@ -120,52 +109,7 @@
 
         learningAlphabet.shakeTheArray();
         learningAlphabet.start();
-        console.log("je charge")
-
-        //commencer l'application maintenant
-
-        // jqueryScript.value.onload = () => {
-        //     console.log("jQuery chargé, maintenant je charge learning.js");
-
-        //     learning = new learningClass(tableauConsonne);
-                
-        //     $('#learn-letter').on('click', function(){
-        //         learning.learnLetter();
-
-        //         $('#input-consonne').css({
-        //             fontSize: '100px'
-        //         })
-
-        //         learning.start()
-        //     })
-
-        //     $('#learn-letter-e').on('click', function(){
-        //         learning.learnLetterE();
-
-        //         $('#input-consonne').css({
-        //             fontSize: '100px'
-        //         })
-
-        //         learning.start()
-        //     })
-
-        //     $('#learn-exemple').on('click', function(){
-        //         learning.learnExemple();
-
-        //         $('#input-consonne').css({
-        //             fontSize: '60px'
-        //         })
-
-        //         learning.start()
-        //     })
-            
-        //     learning.shakeTheArray();
-        //     learning.start();
-        // };
     })
-
-    
-
 </script>
 
 <style scoped>
@@ -177,7 +121,6 @@
     }
 
     #input-consonne{
-        font-size:80px;
         border:none;
         background-color:#fdfdfd;
         text-align: center;
@@ -227,6 +170,6 @@
     }
 
     .card>p{
-        text-transform:uppercase;font-weight:bold;font-size: 60px;text-transform:uppercase;font-weight:bold;padding: 12px 20px;
+        text-transform:uppercase;font-weight:bold;text-transform:uppercase;font-weight:bold;padding: 12px 20px;text-align: center;
     }
 </style>

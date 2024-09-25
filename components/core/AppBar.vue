@@ -11,7 +11,7 @@
         <v-spacer></v-spacer>
 
         <v-btn prepend-icon="mdi-abugida-thai" to="apprendre-alphabet-thai">
-        Apprendre l'alphabet 
+        Apprendre l'alphabet Thaï
         </v-btn>
 
         <v-btn

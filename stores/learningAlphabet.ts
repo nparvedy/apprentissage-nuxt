@@ -16,6 +16,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     validateMode: false,
     removeColor: false,
     size: '60px',
+    sizeInput: '60px',
+    sizePCard: '60px',
     difficulty: 1,
     countGoodAnswer: 0,
     alphabet: [] as Alphabet[],
@@ -27,7 +29,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     cardPathPicture: ["", "", ""],
     resultReponse: false,
     startApplication: false,
-    indiceResult: ""
+    indiceResult: "",
   }),
   actions: {
     setAlphabet(value: Alphabet[]){
@@ -125,36 +127,29 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
             this.startApplication = true;
         }
     },
-
-    hideIndice(){
-        console.log('fait en sorte de cacher les indices')
-        // $('#result-indice').css('display', 'none');
-    },
-
-    showIndice(){
-        console.log('fait en sorte d\'afficher les indices')
-        // $('#result-indice').css('display', 'block');
-    },
     
     learnLetterE(){
         this.input = 'letterE';
         this.indice = 'exemple';
         this.result = 'letter';
-        this.size = '60px'
+        this.size = '60px';
+        this.sizePCard = '60px';
     },
 
     learnLetter(){
         this.input = 'letter';
         this.indice = 'exemple';
         this.result = 'letterE';
-        this.size = '60px'
+        this.size = '60px';
+        this.sizePCard = '60px';
     },
 
     learnExemple(){
         this.input = 'exemple';
         this.indice = 'exempleTranslated';
         this.result = 'letter';
-        this.size = '60px'
+        this.size = '60px';
+        this.sizePCard = '80px';
     },
 
     learnWord(){
@@ -162,6 +157,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         this.indice = '';
         this.result = 'exemple';
         this.size = '20px'
+        this.sizePCard = '30px';
     },
 
     learnPicture(){
@@ -280,8 +276,10 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
         if (this.mode == 3 || this.mode == 5)
         {
             this.indiceResult = "";
+            this.sizeInput = "80px"
         }else if (this.mode == 2){
             this.indiceResult = this.alphabet[randomNumber][resultIndiceKey];
+            this.sizeInput = "30px"
         }else if (this.mode == 4){
             this.indiceResult = "";
         }else {
@@ -322,14 +320,6 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 
                 if (this.mode == 3)
                 {
-                    // $('#input-consonne').text('');
-                    // $('#input-consonne').css({
-                    //     backgroundImage: 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')',
-                    //     backgroundSize: 'cover',
-                    //     height: '150px',
-                    //     width: '150px',
-                    // })
-
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
                     this.inputValue = url;
                     this.cardPathPicture[i] = url;
@@ -346,7 +336,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //     height: '',
                     //     width: '100%',
                     // })
-
+                    
                     let url = 'url(images/'+ this.alphabet[randomNumber]['pathPicture'] + ')';
                     this.cardPathPicture[i] = url;
 
@@ -370,6 +360,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     //         <p style="text-transform:uppercase;font-weight:bold;font-size: ${this.size};text-transform:uppercase;font-weight:bold;padding: 12px 20px;" class="card" click="handleCardClick() value="true" pathPicture="${pathPicture}">${result}</p>
                     //     </div>
                     // `);
+                
                 }
 
                 arraySelected.push(result);
