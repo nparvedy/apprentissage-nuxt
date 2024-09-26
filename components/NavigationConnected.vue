@@ -13,8 +13,8 @@
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-counter" title="Mes scores" value="myscores"></v-list-item>
           <v-list-item prepend-icon="mdi-star-plus" title="Mon abonnement" value="suscribe"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="Mon compte" value="account"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-arrow-left" title="Se déconnecter" value="disconnect" @click="authStore.logout()"></v-list-item>
+          <v-list-item prepend-icon="mdi-account" title="Mon compte" value="account" to="profile"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-arrow-left" title="Se déconnecter" value="disconnect" @click="authStore.logout()" to="connexion"></v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>

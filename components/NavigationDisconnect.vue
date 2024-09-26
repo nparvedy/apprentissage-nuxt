@@ -10,7 +10,8 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-        <v-list-item prepend-icon="mdi-account" title="Se connecter" value="shared" @click="authStore.login()"></v-list-item>
+          <v-list-item prepend-icon="mdi-account" title="Se connecter" value="connexion" to="connexion"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-plus" title="S'inscrire" value="register" to="register"></v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>
