@@ -7,6 +7,9 @@
             </v-card>
             <v-col class="mx-auto pt-0">
                 <v-col class="pt-0">
+                    <div v-if="alertStore.alertDeveloppement == false">
+                        <alert-information-prototype />
+                    </div>
                     <div v-if="alphabetStore.step == 'step-1'" class="only-column" >
                         <AlphabetsConsonneOne />
                     </div>
@@ -40,6 +43,11 @@
 <script setup>
 
     const alphabetStore = useAlphabetStore()
+    const alertStore = useAlertStore()
+
+    onNuxtReady(() => {
+        alertStore.checkAlertDeveloppement() // Récupérer l'authentification une fois Nuxt prêt
+    })
 
     const handleClick = (item) => {
         console.log('La valeur de item.value est :', item.value)

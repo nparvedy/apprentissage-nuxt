@@ -45,6 +45,7 @@
                     value: 2,
                     props: {
                         appendIcon: 'mdi-star-outline',
+                        disabled: true
                     },
                 },
                 {
@@ -52,6 +53,7 @@
                     value: 3,
                     props: {
                         appendIcon: 'mdi-star-outline',
+                        disabled: true
                     },
                 },
                 { type: 'divider' },
@@ -61,6 +63,7 @@
                     value: 4,
                     props: {
                         appendIcon: 'mdi-star-outline',
+                        disabled: true
                     },
                 },
                 {
@@ -68,6 +71,7 @@
                     value: 5,
                     props: {
                         appendIcon: 'mdi-star-outline',
+                        disabled: true
                     },
                 },
                 {
@@ -75,6 +79,7 @@
                     value: 6,
                     props: {
                         appendIcon: 'mdi-star-outline',
+                        disabled: true
                     },
                 },
             ]
