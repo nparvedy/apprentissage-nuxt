@@ -59,7 +59,7 @@
             </v-card>
         </v-row>
     </v-container>
-    
+
     <div v-if="learningAlphabet.startApplication === true">
         <h2 style="font-size:30px;margin-bottom:10px;margin-top:10px;">Résultat : </h2>
         <div v-if="learningAlphabet.resultReponse === true">
