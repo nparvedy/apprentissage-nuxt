@@ -1,6 +1,6 @@
 <template>
    <v-app>
-      <LoadingComponent v-if="loading" />
+      <!--<LoadingComponent v-if="loading" />-->
         <v-layout>
             <core-drawer />
             <core-app-bar />

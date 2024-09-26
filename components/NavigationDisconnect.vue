@@ -3,7 +3,7 @@
         <v-list>
         <v-list-item
             prepend-avatar="https://randomuser.me/api/portraits/lego/5.jpg"
-            title="Anonyme"
+            title="Anonyme" role="listitem" aria-label="Profil d'utilisateur anonyme"
         ></v-list-item>
         </v-list>
 

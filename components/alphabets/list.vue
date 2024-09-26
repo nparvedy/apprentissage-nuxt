@@ -1,20 +1,11 @@
 <template>
-    <v-list v-model:selected='selection' :items="items" @click="handleClick(items[selection])"></v-list>
+    <v-list v-model:selected='selection' :items="items" @click="handleClick(items[selection])" class="height-fit-content"></v-list>
 </template>
 
 <script>
-    import { defineProps } from 'vue';
-
     export default {
         
         setup() {
-            // const props = defineProps({
-            //     learning: {
-            //         required: true
-            //     }
-            // });
-
-            // const learning = props.learning
 
             const alphabetStore = useAlphabetStore()
             const test = "Commencer"
@@ -56,34 +47,40 @@
                         disabled: true
                     },
                 },
-                { type: 'divider' },
-                { type: 'subheader', title: 'Voyelles' },
-                {
-                    title: 'Item #4',
-                    value: 4,
-                    props: {
-                        appendIcon: 'mdi-star-outline',
-                        disabled: true
-                    },
-                },
-                {
-                    title: 'Item #5',
-                    value: 5,
-                    props: {
-                        appendIcon: 'mdi-star-outline',
-                        disabled: true
-                    },
-                },
-                {
-                    title: 'Item #6',
-                    value: 6,
-                    props: {
-                        appendIcon: 'mdi-star-outline',
-                        disabled: true
-                    },
-                },
+                // { type: 'divider' },
+                // { type: 'subheader', title: 'Voyelles' },
+                // {
+                //     title: 'Item #4',
+                //     value: 4,
+                //     props: {
+                //         appendIcon: 'mdi-star-outline',
+                //         disabled: true
+                //     },
+                // },
+                // {
+                //     title: 'Item #5',
+                //     value: 5,
+                //     props: {
+                //         appendIcon: 'mdi-star-outline',
+                //         disabled: true
+                //     },
+                // },
+                // {
+                //     title: 'Item #6',
+                //     value: 6,
+                //     props: {
+                //         appendIcon: 'mdi-star-outline',
+                //         disabled: true
+                //     },
+                // },
             ]
         }),
     };
 
 </script>
+
+<style>
+    .v-card{
+        max-height: fit-content !important;
+    }
+</style>
