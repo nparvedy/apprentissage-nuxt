@@ -32,7 +32,8 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     startApplication: false,
     indiceResult: "",
     showHoverPicture: false,
-    showAnyway: false
+    showAnyway: false,
+    console: [] as string[]
   }),
   actions: {
     // Action pour sauvegarder l'état dans le local storage
@@ -335,6 +336,7 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
     },
 
     start(){
+        this.console = [];
         // $('.card-consonne').empty();
         this.whatMode();
 
@@ -451,11 +453,10 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                 let resultProperty: keyof Alphabet = this.result as keyof Alphabet;
                 let result = this.alphabet[letterRandomId][resultProperty];
 
-                this.cardResult[i] = result;
                 this.cardValue[i] = false;
-
                 // let result = this.alphabet[letterRandomId][this.result];
                 let z = 0;
+                
                 while (this.checkIfLetterExist(this.alphabet[letterRandomId][resultProperty], arraySelected))
                 {
                     z++;
@@ -468,12 +469,16 @@ export const useLearningAlphabetStore = defineStore('learning-alphabet', {
                     }
                 }
 
-                let letterRandom = result
+                let letterRandom = this.alphabet[letterRandomId][resultProperty]
+
+                // let letterRandom = result
 
                 arraySelected.push(letterRandom);
 
                 let pathPicture = this.alphabet[letterRandomId]['pathPicture'];
                 this.cardNamePicture[i] = pathPicture;
+                
+                this.cardResult[i] = letterRandom;
                 
                 let color = this.alphabet[letterRandomId]['color'];
                 

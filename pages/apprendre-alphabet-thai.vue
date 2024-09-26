@@ -22,7 +22,7 @@
             </v-col>
             
             <!-- conteneur qui permet de débuger -->
-            <v-card elevation-5 width="500px">
+            <!-- <v-card elevation-5 width="500px">
                 <v-col>
                     <h2 class="text-uppercase mb-3">Débug</h2>
                     <v-divider></v-divider>
@@ -50,8 +50,11 @@
                     <p class="ml-5"><strong>Nom des images</strong> : {{ ls.cardNamePicture }}</p>
                     <p class="ml-5"><strong>Chemin des images</strong> : {{ ls.cardPathPicture }}</p>
                     <p class="ml-5"><strong>Fausse et vrai carte</strong> : {{ ls.cardValue }}</p>
+                    <v-divider class="mt-3 mb-3"></v-divider>
+                    <h3 class="mt-3 mb-2">Résultat de la console : </h3>
+                    <textarea class="ml-5" style="width:100%; height:200px">{{ ls.console }}</textarea>
                 </v-col>
-            </v-card>
+            </v-card> -->
         </v-row>
         
         <!--<v-btn @click="learning.start()" class="mt-7 ml-8">Commencer</v-btn>-->
