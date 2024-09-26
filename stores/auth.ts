@@ -34,6 +34,7 @@ export const useAuthStore = defineStore('auth', {
     async register({ email, password}: RegisterPayload) {
       // Remplacez ceci par votre logique d'inscription, par exemple une requête API
       // Voici un exemple avec fetch (assurez-vous que votre API est configurée)
+      return;
       const response = await fetch('https://votre-api.com/register', {
         method: 'POST',
         headers: {

@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useAlertStore = defineStore('alert', {
   state: () => ({
     alertDeveloppement: false, // Par défaut, l'utilisateur n'a pas l'alert
+    alertInscription: false,
   }),
   actions: {
     valideAlertDeveloppement() {
@@ -13,6 +14,10 @@ export const useAlertStore = defineStore('alert', {
     checkAlertDeveloppement() {
         const alertDeveloppement = localStorage.getItem('ifAlertDeveloppementSee')
         this.alertDeveloppement = alertDeveloppement === 'true'
+    },
+    checkAlertInscription() {
+      const alertInscription = localStorage.getItem('ifAlertInscriptionSee')
+      this.alertInscription = alertInscription === 'true'
     }
   },
 })

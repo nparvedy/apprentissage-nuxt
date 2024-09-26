@@ -1,5 +1,12 @@
 <template>
     <v-container>
+        <v-row justify="center" align="center">
+            <v-col sm="8" md="6">
+                <div v-if="alertStore.alertInscription == false">
+                    <alert-information-prototype />
+                </div>
+            </v-col>
+        </v-row>
       <v-row justify="center" align="center">
         <v-col cols="12" sm="8" md="4">
           <v-card>
@@ -36,6 +43,11 @@
     const router = useRouter(); // Instanciation du routeur
     const route = useRoute(); // Obtenir la route actuelle
     const authStore = useAuthStore()
+    const alertStore = useAlertStore()
+
+    onNuxtReady(() => {
+        alertStore.checkAlertInscription()
+    })
   
     const email = ref('');
     const password = ref('');
