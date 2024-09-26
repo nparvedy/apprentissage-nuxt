@@ -22,7 +22,7 @@
             </v-col>
             
             <!-- conteneur qui permet de débuger -->
-            <!-- <v-card elevation-5 width="500px">
+            <v-card elevation-5 width="500px">
                 <v-col>
                     <h2 class="text-uppercase mb-3">Débug</h2>
                     <v-divider></v-divider>
@@ -54,7 +54,7 @@
                     <h3 class="mt-3 mb-2">Résultat de la console : </h3>
                     <textarea class="ml-5" style="width:100%; height:200px">{{ ls.console }}</textarea>
                 </v-col>
-            </v-card> -->
+            </v-card>
         </v-row>
         
         <!--<v-btn @click="learning.start()" class="mt-7 ml-8">Commencer</v-btn>-->

@@ -167,8 +167,8 @@
     .card{
         color:white;font-size:30px;background-color:green;margin:20px;display: flex;align-items: center;justify-content: center;border-radius:20px;cursor:pointer;box-shadow:0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
         background-size: cover;
-        height: 150px;
-        width: 150px;
+        min-height: 150px;
+        min-width: 150px;
     }
 
     .card>p{
